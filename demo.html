@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vue Example</title>
+
+    <!-- load Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="demo.css">
+</head>
+
+<body>
+    <div id="app">
+        <h1>Vue Example</h1>
+
+        <div>
+            <input type="text" v-model="newItem" />
+            <button v-on:click="addItem">Add</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in items" :key="index">
+                    <td>
+                        <span v-if="!item.editing">{{ item.text }}</span>
+                        <input v-else v-model="item.text" />
+                    </td>
+                    <td>
+                        <button v-if="!item.editing" v-on:click="editItem(index)">Edit</button>
+                        <button v-else v-on:click="saveItem(index)">Save</button>
+                        <button v-on:click="deleteItem(index)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="demo.js"></script>
+</body>
+
+</html>

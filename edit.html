@@ -1,76 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>Vue按钮页面</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="route.js"></script>
-    <style>
-        body {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            height: 100vh;
-        }
-
-        h1,
-        p {
-            text-align: center;
-            margin: 0;
-            color: #333;
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        button {
-            font-size: 24px;
-            padding: 20px 40px;
-            margin-bottom: 20px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>楼层摄像头IP管理</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
+    .container {
+      max-width: 960px;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+  </style>
 </head>
 <body>
-    <h1>欢迎来到编辑管理</h1>
-    <div id="app">
-        <div class="button-container">
-            <button @click="edit">编辑</button>
-            <button @click="view">查看</button>
-        </div>
+  <div id="app" class="container">
+    <h1 class="text-center">楼层摄像头IP管理</h1>
+    <form>
+      <div class="form-group">
+        <label for="building-input">楼</label>
+        <input class="form-control" type="text" id="building-input" v-model="newBuilding" placeholder="请输入楼名称">
+      </div>
+      <div class="form-group">
+        <label for="floor-input">层</label>
+        <input class="form-control" type="text" id="floor-input" v-model="newFloor" placeholder="请输入层号">
+      </div>
+      <div class="form-group">
+        <label for="camera-input">摄像头</label>
+        <input class="form-control" type="text" id="camera-input" v-model="newCamera" placeholder="请输入摄像头编号">
+      </div>
+      <div class="form-group">
+        <label for="ip-input">IP地址</label>
+        <input class="form-control" type="text" id="ip-input" v-model="newIp" placeholder="请输入IP地址">
+      </div>
+      <button class="btn btn-success" type="button" v-on:click="addRow">添加</button>
+    </form>
+    <div class="table-container">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>楼</th>
+            <th>层</th>
+            <th>摄像头</th>
+            <th>IP地址</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(row, index) in rows" :key="index">
+            <td>{{row.building}}</td>
+            <td>{{row.floor}}</td>
+            <td>{{row.camera}}</td>
+            <td>{{row.ip}}</td>
+            <td>
+              <button class="btn btn-primary" type="button" v-on:click="editRow(index)">编辑</button>
+              <button class="btn btn-danger" type="button" v-on:click="deleteRow(index)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <script>
-        export default {
-  name: 'EditPage',
-  props: ['floorId', 'roomId', 'cameraId']
-}
-        var app = new Vue({
-            el: '#app',
-            methods: {
-                edit: function () {
-                    route.go('edit');
-                },
-                view: function () {
-                    route.go('view');
-                }
-            }
-        });
-    </script>
+  </div>
 </body>
 </html>
+
